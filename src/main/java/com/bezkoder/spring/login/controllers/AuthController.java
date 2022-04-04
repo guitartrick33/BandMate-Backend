@@ -72,6 +72,7 @@ public class AuthController {
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
         .body(new UserInfoResponse(userDetails.getId(),
                                    userDetails.getUsername(),
+                                   userDetails.getFirstName(),
                                    userDetails.getEmail(),
                                    roles));
   }
@@ -89,6 +90,7 @@ public class AuthController {
     // Create new user's account
     User user = new User(signUpRequest.getUsername(),
                          signUpRequest.getEmail(),
+                         signUpRequest.getFirstName(),
                          encoder.encode(signUpRequest.getPassword()));
 
     Set<String> strRoles = signUpRequest.getRole();
