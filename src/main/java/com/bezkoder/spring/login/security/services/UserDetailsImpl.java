@@ -1,10 +1,11 @@
 package com.bezkoder.spring.login.security.services;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import com.bezkoder.spring.login.models.Genre;
+import com.bezkoder.spring.login.models.Role;
+import com.sun.tools.javac.jvm.Gen;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,17 +24,32 @@ public class UserDetailsImpl implements UserDetails {
 
   private String firstName;
 
+  private String lastName;
+
+  private Date dateOfBirth;
+
+  private String country;
+
+  private String description;
+
+  private List<Genre> genres;
+
   @JsonIgnore
   private String password;
 
   private Collection<? extends GrantedAuthority> authorities;
 
-  public UserDetailsImpl(Long id, String username, String email, String firstName, String password,
-      Collection<? extends GrantedAuthority> authorities) {
+  public UserDetailsImpl(Long id, String username, String email, String firstName, String lastName, Date dateOfBirth, String country, String description, List<Genre> genres, String password,
+                         Collection<? extends GrantedAuthority> authorities) {
     this.id = id;
     this.username = username;
     this.email = email;
     this.firstName = firstName;
+    this.lastName = lastName;
+    this.dateOfBirth = dateOfBirth;
+    this.country = country;
+    this.description = description;
+    this.genres = genres;
     this.password = password;
     this.authorities = authorities;
   }
@@ -48,7 +64,12 @@ public class UserDetailsImpl implements UserDetails {
         user.getUsername(), 
         user.getEmail(),
         user.getFirstName(),
-        user.getPassword(), 
+        user.getLastName(),
+        user.getDateOfBirth(),
+        user.getCountry(),
+        user.getDescription(),
+        user.getGenres(),
+        user.getPassword(),
         authorities);
   }
 
@@ -56,6 +77,7 @@ public class UserDetailsImpl implements UserDetails {
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return authorities;
   }
+
 
   public Long getId() {
     return id;
@@ -66,6 +88,22 @@ public class UserDetailsImpl implements UserDetails {
   }
 
   public String getFirstName() {return firstName;}
+
+  public String getLastName() {return lastName; }
+
+  public Date getDateOfBirth() { return dateOfBirth; }
+
+  public String getCountry(){
+    return  country;
+  }
+
+  public String getDescription(){
+    return description;
+  }
+
+  public List<Genre> getGenres(){
+    return genres;
+  }
 
   @Override
   public String getPassword() {

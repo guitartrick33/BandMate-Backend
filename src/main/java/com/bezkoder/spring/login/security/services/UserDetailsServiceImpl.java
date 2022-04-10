@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bezkoder.spring.login.models.User;
 import com.bezkoder.spring.login.repository.UserRepository;
 
+import java.util.Optional;
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
   @Autowired
@@ -23,5 +25,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     return UserDetailsImpl.build(user);
   }
+
+//  @Override
+//  public Optional<User> loadUserById(Long id){
+//    Optional<User> user = userRepository.findById(id);
+//    return user;
+//  }
 
 }

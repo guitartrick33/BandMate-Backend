@@ -1,7 +1,8 @@
 package com.bezkoder.spring.login.models;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -33,8 +34,23 @@ public class User {
   private String firstName;
 
   @NotBlank
+  @Size(max = 50)
+  private String lastName;
+
+  @DateTimeFormat
+  private Date dateOfBirth;
+
+  @Size(max = 50)
+  private String country;
+
+  @NotBlank
+  @Size(max = 256)
+  private String description;
+
+  @NotBlank
   @Size(max = 120)
   private String password;
+
 
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "user_roles", 
@@ -46,15 +62,20 @@ public class User {
   @JoinTable(name = "user_genres",
           joinColumns = @JoinColumn(name = "user_id"),
           inverseJoinColumns = @JoinColumn(name = "genre_id"))
-  private Set<Genre> genres = new HashSet<>();
+  private List<Genre> genres = new ArrayList<>();
 
   public User() {
   }
 
-  public User(String username, String email, String firstName, String password) {
+  public User(String username, String email, String firstName, String lastName, Date dateOfBirth, String country, String description, List<Genre> genres, String password) {
     this.username = username;
     this.email = email;
     this.firstName = firstName;
+    this.lastName = lastName;
+    this.dateOfBirth = dateOfBirth;
+    this.country = country;
+    this.description = description;
+    this.genres = genres;
     this.password = password;
   }
 
@@ -78,6 +99,30 @@ public class User {
 
   public void setFirstName(String firstName) { this.firstName = firstName; }
 
+  public String getLastName() { return lastName; }
+
+  public void setLastName(String lastName) { this.lastName = lastName; }
+
+  public Date getDateOfBirth() { return dateOfBirth; }
+
+  public void setDateOfBirth(Date dateOfBirth) { this.dateOfBirth = dateOfBirth; }
+
+  public String getCountry() {
+    return country;
+  }
+
+  public void setCountry(String country){
+    this.country = country;
+  }
+
+  public String getDescription(){
+    return description;
+  }
+
+  public void setDescription(String description){
+    this.description = description;
+  }
+
   public String getEmail() {
     return email;
   }
@@ -100,5 +145,13 @@ public class User {
 
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
+  }
+
+  public List<Genre> getGenres(){
+    return genres;
+  }
+
+  public void setGenres(List<Genre> genres){
+    this.genres = genres;
   }
 }

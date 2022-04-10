@@ -1,5 +1,6 @@
 package com.bezkoder.spring.login.controllers;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -7,6 +8,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.bezkoder.spring.login.models.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -72,8 +74,13 @@ public class AuthController {
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
         .body(new UserInfoResponse(userDetails.getId(),
                                    userDetails.getUsername(),
-                                   userDetails.getFirstName(),
                                    userDetails.getEmail(),
+                                   userDetails.getFirstName(),
+                                   userDetails.getLastName(),
+                                   userDetails.getDateOfBirth(),
+                                   userDetails.getCountry(),
+                                   userDetails.getDescription(),
+                                   userDetails.getGenres(),
                                    roles));
   }
 
@@ -91,6 +98,11 @@ public class AuthController {
     User user = new User(signUpRequest.getUsername(),
                          signUpRequest.getEmail(),
                          signUpRequest.getFirstName(),
+                         signUpRequest.getLastName(),
+                         signUpRequest.getDateOfBirth(),
+                         signUpRequest.getCountry(),
+                         signUpRequest.getDescription(),
+                         signUpRequest.getGenres(),
                          encoder.encode(signUpRequest.getPassword()));
 
     Set<String> strRoles = signUpRequest.getRole();
@@ -124,6 +136,7 @@ public class AuthController {
     }
 
     user.setRoles(roles);
+    user.setGenres(signUpRequest.getGenres());
     userRepository.save(user);
 
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
