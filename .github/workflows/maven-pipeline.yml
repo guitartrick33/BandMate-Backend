@@ -18,3 +18,12 @@ jobs:
           echo $JWT_SECURE
         env:
           JWT_SECURE: ${{ secrets.JWT_SECURE }}
+
+  job2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: DB_SECURE
+        run:
+          echo $DB_SECURE
+        env:
+          DB_SECURE: ${{ secrets.DB_SECURE}}
