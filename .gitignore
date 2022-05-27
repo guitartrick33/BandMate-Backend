@@ -1,4 +1,4 @@
 .idea
 
-secrets.properties.properties
+src/main/resources/secrets.properties
 
