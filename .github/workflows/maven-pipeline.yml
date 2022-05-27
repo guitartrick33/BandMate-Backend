@@ -13,8 +13,8 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     steps:
-      - name: Test
+      - name: JWT_SECURE
         run:
-          echo $JWT_SECURE
+          echo secrets.properties
         env:
           JWT_SECURE: ${{ secrets.JWT_SECURE }}
