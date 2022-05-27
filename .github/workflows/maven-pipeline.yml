@@ -15,6 +15,6 @@ jobs:
     steps:
       - name: JWT_SECURE
         run:
-          echo secrets.properties
+          echo $JWT_SECURE
         env:
           JWT_SECURE: ${{ secrets.JWT_SECURE }}
