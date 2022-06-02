@@ -9,6 +9,10 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import com.bezkoder.spring.login.models.Genre;
+import com.bezkoder.spring.login.security.services.UserDetailsServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -17,6 +21,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,6 +59,32 @@ public class AuthController {
 
   @Autowired
   JwtUtils jwtUtils;
+
+  @Autowired
+  private UserDetailsServiceImpl userDetailsService;
+
+  private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
+
+  private UserDetails getUserFromToken (String token) {
+    try {
+      if (token != null && jwtUtils.validateJwtToken(token)) {
+        String username = jwtUtils.getUserNameFromJwtToken(token);
+        return userDetailsService.loadUserByUsername(username);
+      }
+    } catch (Exception e) {
+      logger.error("Cannot set user authentication: {}", e);
+    }
+
+    return null;
+  }
+
+  @RabbitListener(queues = "${queue.name}")
+  public String getUserDetailsFromToken(String token) {
+    UserDetails userDetails = getUserFromToken(token);
+    System.out.println("Received Token:" + token);
+    assert userDetails != null;
+    return userDetails.getUsername();
+  }
 
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {

@@ -13,6 +13,8 @@ D:\BandMate-Backend\src\main\java\com\bezkoder\spring\login\security\jwt\JwtUtil
 D:\BandMate-Backend\src\main\java\com\bezkoder\spring\login\SpringBootLoginExampleApplication.java
 D:\BandMate-Backend\src\main\java\com\bezkoder\spring\login\controllers\AuthController.java
 D:\BandMate-Backend\src\main\java\com\bezkoder\spring\login\security\jwt\AuthTokenFilter.java
+D:\BandMate-Backend\src\main\java\Config.java
+D:\BandMate-Backend\src\main\java\Server.java
 D:\BandMate-Backend\src\main\java\com\bezkoder\spring\login\models\Role.java
 D:\BandMate-Backend\src\main\java\com\bezkoder\spring\login\models\User.java
 D:\BandMate-Backend\src\main\java\com\bezkoder\spring\login\models\ERole.java

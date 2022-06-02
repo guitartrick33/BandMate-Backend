@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import com.bezkoder.spring.login.models.Genre;
 import com.bezkoder.spring.login.models.Role;
-import com.sun.tools.javac.jvm.Gen;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
