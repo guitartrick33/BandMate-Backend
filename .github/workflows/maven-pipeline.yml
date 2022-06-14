@@ -5,18 +5,18 @@ on:
     branches:
       - main
 
-env:
-  PROJECT_ID: bandmate-backend
-  GKE_CLUSTER: bandmate-auth   # Add your cluster name here.
-  GKE_ZONE: europe-west4-a  # Add your cluster zone here.
-  DEPLOYMENT_NAME: bandmate-auth # Add your deployment name here.
-  IMAGE: static-site
+#env:
+#  PROJECT_ID: bandmate-backend
+#  GKE_CLUSTER: bandmate-auth   # Add your cluster name here.
+#  GKE_ZONE: europe-west4-a  # Add your cluster zone here.
+#  DEPLOYMENT_NAME: bandmate-auth # Add your deployment name here.
+#  IMAGE: static-site
 
 jobs:
   build:
     name: Setup, Build, Publish, and Deploy
     runs-on: ubuntu-latest
-    environment: production
+#    environment: production
 
     steps:
       - uses: actions/checkout@v2
@@ -26,6 +26,7 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: maven
+
         - name: Build with Maven
           run: mvn -B package --file pom.xml -Dmaven.test.skip=true
 
