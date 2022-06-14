@@ -68,7 +68,7 @@ jobs:
   # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |-
-          ./kustomize edit set image gcr.io/PROJECT_ID/IMAGE:TAG=gcr.io/bandmate-backend/bandmate-auth:latest
+          ./kustomize edit set image gcr.io/bandmate-backend/bandmate-auth=gcr.io/bandmate-backend/bandmate-auth:latest
           ./kustomize build . | kubectl apply -f -
           kubectl rollout status deployment/users-api
           kubectl get services -o wide
