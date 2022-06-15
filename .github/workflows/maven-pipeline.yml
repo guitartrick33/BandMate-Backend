@@ -5,12 +5,12 @@ on:
     branches:
       - main
 
-#env:
-#  PROJECT_ID: bandmate-backend
-#  GKE_CLUSTER: bandmate-auth   # Add your cluster name here.
-#  GKE_ZONE: europe-west4-a  # Add your cluster zone here.
-#  DEPLOYMENT_NAME: bandmate-auth # Add your deployment name here.
-#  IMAGE: static-site
+env:
+  PROJECT_ID: secrets.PROJECT_ID
+  GKE_CLUSTER: secrets.GKE_CLUSTER
+  GKE_ZONE: secrets.GKE_ZONE
+  GKE_REPO: secrets.GKE_REPO
+  GKE_APP: secrets.GKE_APP
 
 jobs:
   build:
@@ -54,11 +54,11 @@ jobs:
 
       - name: Build IMAGE
         run:
-          docker build -t europe-west4-docker.pkg.dev/bandmate-backend/bandmate-auth/bandmate-auth:latest .
+          docker build -t europe-west4-docker.pkg.dev/$PROJECT_ID/$GKE_REPO/$GKE_APP:latest .
 
       - name: Push image to registry
         run:
-          docker push europe-west4-docker.pkg.dev/bandmate-backend/bandmate-auth/bandmate-auth:latest
+          docker push europe-west4-docker.pkg.dev/$PROJECT_ID/$GKE_REPO/$GKE_APP:latest
 
   # Set up kustomize
       - name: Set up Kustomize
@@ -68,6 +68,6 @@ jobs:
   # Deploy the Docker image to the GKE cluster
       - name: Deploy
         run: |
-          gcloud container clusters get-credentials bandmate-auth --zone europe-west4-a
+          gcloud container clusters get-credentials bandmate-auth --zone $GKE_ZONE
           sleep 5s
-          kubectl set image deployment/bandmate-auth bandmate-auth=europe-west4-docker.pkg.dev/bandmate-backend/bandmate-auth/bandmate-auth:latest
+          kubectl set image deployment/bandmate-auth bandmate-auth=europe-west4-docker.pkg.dev/$PROJECT_ID/$GKE_REPO/$GKE_APP:latest

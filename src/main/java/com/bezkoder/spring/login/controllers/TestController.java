@@ -16,7 +16,7 @@ public class TestController {
 
   @GetMapping("/all")
   public String allAccess() {
-    return "Deployment successful.";
+    return "Deployment successful v2.";
   }
 
   @GetMapping("/user")
