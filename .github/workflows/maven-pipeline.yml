@@ -54,11 +54,11 @@ jobs:
 
       - name: Build IMAGE
         run:
-          docker build -t europe-west4-docker.pkg.dev/$PROJECT_ID/bandmate-auth/bandmate-auth:latest .
+          docker build -t europe-west4-docker.pkg.dev/bandmate-backend/bandmate-auth/bandmate-auth:latest .
 
       - name: Push image to registry
         run:
-          docker push europe-west4-docker.pkg.dev/$PROJECT_ID/bandmate-auth/bandmate-auth:latest
+          docker push europe-west4-docker.pkg.dev/bandmate-backend/bandmate-auth/bandmate-auth:latest
 
   # Set up kustomize
       - name: Set up Kustomize
@@ -70,4 +70,4 @@ jobs:
         run: |
           gcloud container clusters get-credentials bandmate-auth --zone $GKE_ZONE
           sleep 5s
-          kubectl set image deployment/bandmate-auth bandmate-auth=europe-west4-docker.pkg.dev/$PROJECT_ID/bandmate-auth/bandmate-auth:latest
+          kubectl set image deployment/bandmate-auth bandmate-auth=europe-west4-docker.pkg.dev/bandmate-backend/bandmate-auth/bandmate-auth:latest
