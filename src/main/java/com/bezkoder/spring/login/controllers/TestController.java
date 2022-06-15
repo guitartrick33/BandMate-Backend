@@ -19,6 +19,11 @@ public class TestController {
     return "Deployment successful v2.";
   }
 
+  @GetMapping("/deploy")
+  public String deployment() {
+    return "Deployment successful v2.";
+  }
+
   @GetMapping("/user")
   @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
   public String userAccess() {
