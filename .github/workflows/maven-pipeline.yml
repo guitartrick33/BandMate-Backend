@@ -65,7 +65,9 @@ jobs:
         run: |-
           curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
           chmod u+x ./kustomize
-    # Deploy the Docker image to the GKE cluster
+  # Deploy the Docker image to the GKE cluster
       - name: Deploy
-        run:
+        run: |
+          gcloud container clusters get-credentials bandmate-auth --zone europe-west4-a
+          sleep 5s
           kubectl set image deployment/bandmate-auth bandmate-auth=europe-west4-docker.pkg.dev/bandmate-backend/bandmate-auth/bandmate-auth:latest
