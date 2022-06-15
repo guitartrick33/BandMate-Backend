@@ -67,8 +67,5 @@ jobs:
           chmod u+x ./kustomize
     # Deploy the Docker image to the GKE cluster
       - name: Deploy
-        run: |-
-          kustomize edit set image gcr.io/bandmate-backend/bandmate-auth/bandmate-auth:latest=gcr.io/bandmate-backend/bandmate-auth/bandmate-auth:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
-          kustomize build . | kubectl apply -f -
-          kubectl rollout status deployment bandmate-auth/bandmate-auth:latest
-          kubectl get services -o wide
+        run:
+          kubectl set image deployment/bandmate-auth bandmate-auth=europe-west4-docker.pkg.dev/bandmate-backend/bandmate-auth/bandmate-auth:latest
