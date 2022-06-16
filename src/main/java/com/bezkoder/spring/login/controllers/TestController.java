@@ -21,7 +21,7 @@ public class TestController {
 
   @GetMapping("/deploy")
   public String deployment() {
-    return "Deployment successful v3.";
+    return "Deployment successful v4.";
   }
 
   @GetMapping("/user")
